@@ -1,11 +1,22 @@
 <?php 
-
+    require("database.php");
+    $sqlStatement ="
+    select m.uID,m.unumber,m.uPasswd,m.uName,a.acID,a.total,d.Date,d.type,d.money,d.total
+    FROM member m,details d,account a
+    where m.uID=a.uID
+    AND a.acID=d.acID";
+    $result = mysqli_query($con, $sqlStatement);
     session_start();
-    if (isset($_SESSION["userName"]))//檢查是否有資料
     
-    $sUserName = $_SESSION["userName"];//有
-    else 
-    $sUserName = "Guest";//沒有
+    if (isset($_SESSION["txtUserName"])){//檢查是否有資料
+      $row = mysqli_fetch_assoc($result);
+      $sUserName = $_SESSION["txtUserName"];//有
+    }else {
+      $sUserName = "Guest";//沒有
+    }
+    
+    
+    
 
 ?>
 <!DOCTYPE html >
@@ -33,7 +44,7 @@
         <?php }?>
         </button>
         <tr>
-          <td align="center" bgcolor="#CCCCCC"><?php echo "Welcome! " . $sUserName ?> </td><!--登入成功後會出現使用者帳號-->
+          <td align="center" bgcolor="#CCCCCC" ><?="Welcome!". $sUserName ?> </td><!--登入成功後會出現使用者帳號-->
         </tr>
       </form>
     </div>

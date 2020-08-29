@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if (!isset($_SESSION["userName"]))//檢查$_COOKIE是否沒有一個userName的陣列資料
+if (!isset($_SESSION["txtUserName"]))//檢查$_COOKIE是否沒有一個userName的陣列資料
 {
   //沒有
   $_SESSION["lastPage"] = "secret.php";

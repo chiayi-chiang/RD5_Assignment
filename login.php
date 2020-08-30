@@ -1,13 +1,4 @@
 <?php 
-session_start();
-if (isset($_GET["logout"]))//read ? back things(index 28)
-{
-  $_SESSION["txtUserName"] = $sUserName;
-  unset($_SESSION["txtUserName"]);
-  //setcookie("userName ", "Guest", time() - 3600);//clien cookie,-60*60*24*7 after 7 days ago can't eat
-	echo "<script type='text/javascript'>alert('登出成功');location.href='index.php';</script>";//go back to homepage
-	exit();
-}
 
 if (isset($_POST["btnHome"]))//read 表單
 {
@@ -32,12 +23,7 @@ if (isset($_POST["btnOK"]))//read 表單，去看$_POST裏頭有沒有一個較b
    // setcookie("userName", $sUserName);//請瀏覽器(userName)幫忙記住$sUserName的資料
     session_start();
     $_SESSION["txtUserName"] = $sUserName;
-    if (isset($_SESSION["lastPage"]))//read cookie，
-      
-		  header(sprintf("Location: %s", $_SESSION["lastPage"]));//%s(字串)<-$_SESSION["lastPage"]，
-		else
-		   header("Location: index.php");//go back to homepage
-		exit();
+    echo "<script type='text/javascript'> alert('登入成功');location.href='index.php';</script>";
 	}else{
     echo "<script type='text/javascript'> alert('尚未成為會員');location.href='singup.php';</script>";
   }

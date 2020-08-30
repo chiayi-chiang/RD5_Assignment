@@ -1,17 +1,5 @@
  <?php 
 
-
-
-// session_start();
-// if (isset($_GET["logout"]))//read ? back things(index 28)
-// {
-//   $_SESSION["userName"] = $sUserName;
-//   unset($_SESSION["userName"]);
-//   //setcookie("userName ", "Guest", time() - 3600);//clien cookie,-60*60*24*7 after 7 days ago can't eat
-// 	header("Location: index.php");//go back to homepage
-// 	exit();
-// }
-
 if (isset($_POST["btnHome"]))//read 表單
 {
 	header("Location: index.php");//go back to homepage
@@ -38,11 +26,12 @@ if (isset($_POST["btnOK"]))//read 表單，去看$_POST裏頭有沒有一個較b
     require("database.php");//呼叫sql
     $result=mysqli_query($con, $sql) or die('MySQL query error');//把sql語法傳入
     $row = mysqli_fetch_assoc($result);
-    $row =["unumber"];
-    echo "<script type='text/javascript'> alert('註冊成功');location.href='login.php';</script>";
+    session_start();
+    $_SESSION["txtUserName"] = $sUserName;
+    echo "<script type='text/javascript'> alert('註冊成功');location.href='index.php';</script>";
   }
-  
-  
+    
+
 }
 
 
@@ -74,8 +63,8 @@ if (isset($_POST["btnOK"]))//read 表單，去看$_POST裏頭有沒有一個較b
         </tr>
         <tr>
           <button type="submit" name="btnOK" id="btnOK"><a>註冊</a></button><!--按鈕為btnOK-->
-            <button type="reset" name="btnReset" id="btnReset"><a>重設</a></button> 
-            <button type="submit" name="btnHome" id="btnHome"><a>回首頁</a></button> 
+          <button type="reset" name="btnReset" id="btnReset"><a>重設</a></button> 
+          <button type="submit" name="btnHome" id="btnHome"><a>回首頁</a></button> 
         </tr>
       </form>
     </div>

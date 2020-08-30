@@ -9,10 +9,19 @@
     session_start();
     
     if (isset($_SESSION["txtUserName"])){//檢查是否有資料
-      $row = mysqli_fetch_assoc($result);
       $sUserName = $_SESSION["txtUserName"];//有
     }else {
       $sUserName = "Guest";//沒有
+    }
+
+    session_start();
+    if (isset($_GET["logout"]))//read ? back things(index 28)
+    {
+      $_SESSION["txtUserName"] = $sUserName;
+      unset($_SESSION["txtUserName"]);
+      //setcookie("userName ", "Guest", time() - 3600);//clien cookie,-60*60*24*7 after 7 days ago can't eat
+      echo "<script type='text/javascript'>alert('登出成功');location.href='index.php';</script>";//go back to homepage
+      exit();
     }
     
     
@@ -40,7 +49,7 @@
         <?php if ($sUserName == "Guest"){?>
           <td align="center" valign="baseline"><a href="login.php">登入</a>｜<a href="singup.php">註冊</a></td><!--yes-->
         <?php }else{?>
-          <td align="center" valign="baseline"><a href="login.php?logout=1">登出</a>|<a href="secret.php">會員專用頁</a></td><!--no-->
+          <td align="center" valign="baseline"><a href="index.php?logout=1">登出</a>|<a href="secret.php">會員專用頁</a></td><!--no-->
         <?php }?>
         </button>
         <tr>

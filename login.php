@@ -23,6 +23,8 @@ if (isset($_POST["btnOK"]))//read 表單，去看$_POST裏頭有沒有一個較b
    // setcookie("userName", $sUserName);//請瀏覽器(userName)幫忙記住$sUserName的資料
     session_start();
     $_SESSION["txtUserName"] = $sUserName;
+    $_SESSION["txtUserNumber"] = $sUserNumber;
+    //echo ($sUserNumber);
     echo "<script type='text/javascript'> alert('登入成功');location.href='index.php';</script>";
 	}else{
     echo "<script type='text/javascript'> alert('尚未成為會員');location.href='singup.php';</script>";
@@ -48,18 +50,18 @@ if (isset($_POST["btnOK"]))//read 表單，去看$_POST裏頭有沒有一個較b
             <td colspan="2" align="center" bgcolor="#CCCCCC"><font color="#00000">會員系統 - 登入<font></td>
         </tr>
         <tr>
-          <input type="text" name="txtUserNumber" id="txtUserNumber" placeholder="UserNumber" />
+          <input type="text" name="txtUserNumber" id="txtUserNumber"  required placeholder="UserNumber" />
         </tr>
         <tr>
-          <input type="password" name="txtPassword" id="txtPassword" placeholder="password" />
+          <input type="password" name="txtPassword" id="txtPassword"  required placeholder="password" />
         </tr>
         <tr>
-          <input type="text" name="txtUserName" id="txtUserName" placeholder="UserName" />
+          <input type="text" name="txtUserName" id="txtUserName"  required placeholder="UserName" />
         </tr>
         <tr>
           <button type="submit" name="btnOK" id="btnOK"><a>登入</a></button><!--按鈕為btnOK-->
             <button type="reset" name="btnReset" id="btnReset"><a>重設</a></button> 
-            <button type="submit" name="btnHome" id="btnHome"><a>回首頁</a></button> 
+            <a href="index.php">回首頁</a>
         </tr>
       </form>
     </div>

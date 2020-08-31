@@ -1,13 +1,7 @@
 <?php 
     require("database.php");
-    $sqlStatement ="
-    select m.uID,m.unumber,m.uPasswd,m.uName,a.acID,a.total,d.Date,d.type,d.money,d.total
-    FROM member m,details d,account a
-    where m.uID=a.uID
-    AND a.acID=d.acID";
-    $result = mysqli_query($con, $sqlStatement);
-    session_start();
     
+    session_start();
     if (isset($_SESSION["txtUserName"])){//檢查是否有資料
       $sUserName = $_SESSION["txtUserName"];//有
     }else {
@@ -23,7 +17,6 @@
       echo "<script type='text/javascript'>alert('登出成功');location.href='index.php';</script>";//go back to homepage
       exit();
     }
-    
     
     
 
@@ -49,7 +42,7 @@
         <?php if ($sUserName == "Guest"){?>
           <td align="center" valign="baseline"><a href="login.php">登入</a>｜<a href="singup.php">註冊</a></td><!--yes-->
         <?php }else{?>
-          <td align="center" valign="baseline"><a href="index.php?logout=1">登出</a>|<a href="secret.php">會員專用頁</a></td><!--no-->
+          <td align="center" valign="baseline"><a href="index.php?logout=1">登出</a>|<a href="secret.php" name="secret">會員專用頁</a></td><!--no-->
         <?php }?>
         </button>
         <tr>

@@ -5,17 +5,21 @@
 
 
 session_start();
-$sUserNumber=$_SESSION["txtUserNumber"];
+$sUserNumber=$_SESSION["txtUserNumber"];//get now member's uuserNumber
 //echo $sUserNumber;
+//to sql get now member total
 $total = "select *
 FROM member m,details d
 where m.uID=d.uID
 AND unumber = '$sUserNumber'";
-
 require("database.php");
 $sqltotal =mysqli_fetch_assoc(mysqli_query($con, $total));
 //var_dump($sqltotal);
-$balance=$sqltotal["total"]-$_POST["money"];
+$Usertotal=$sqltotal["total"];//total
+$exmoney = $_POST["money"];//to import expense money
+//if member expense to overstep the limit，the expense upper bound equal total
+if($exmoney >= $Usertotal) { return $exmoney=$Usertotal; }
+$balance=$Usertotal-$exmoney;
 
 $id = $sqltotal["uID"];
 
@@ -26,22 +30,25 @@ $id = $sqltotal["uID"];
 
 if (isset($_POST["okButton"])) {
     
-    global $id;
+    global $id;//get 24-> $id to find now member in sql
+    //all for import frame to take out
     $nowdate = $_POST["nowdate"];
     $type = $_POST["typeId"];
     $money = $_POST["money"];
     $balance = $_POST["balance"];
     //echo $type;
-    $sql = 
+    //insert into to details sql
+    $details = 
         "insert into details (uID,date,type, money,balance )
          values ('$id','$nowdate','$type' ,'$money', '$balance')";
-    var_dump($sql);
-    mysqli_query($con, $sql);
-    $sql1="UPDATE `member` SET `total` = '$balance' WHERE `member`.`uID` = '$id'";
+    //var_dump($sql);
+    mysqli_query($con, $details);
+    //update to member->total sql
+    $total="UPDATE `member` SET `total` = '$balance' WHERE `member`.`uID` = '$id'";
     //var_dump($sql1);
-    mysqli_query($con, $sql1);
+    mysqli_query($con, $total);
 
-    header("location: secret.php");
+    header("location: secret.php");//go bake to secret screen
 }
   
     
@@ -93,14 +100,19 @@ if (isset($_POST["okButton"])) {
     <label for="money" class="col-4 col-form-label">金額:</label> 
     <div class="col-8">
         <div class = "demo">
-            <input id="money" name="money" type="text" class="form-control" autofocus onchange="this.form.submit()" value ="<?=(isset($_POST['money']))?$_POST['money']:""?>">
+            <input id="money" name="money" type="text" class="form-control"
+             autofocus 
+             onchange="this.form.submit()" value ="<?=(isset($_POST['money']))?$_POST['money']:""?>">
+             <!--autofocus->鎖定輸入框，
+             onchange="this.form.submit()"->監視輸入框資料是否有變更，亦有變更立即送出所有表單
+             如果$_POST['money']有值，則顯示，沒有則空-->
         </div>
     </div>
   </div>
   <div class="form-group row">
     <label for="balance" class="col-4 col-form-label">餘額:</label> 
     <div class="col-8">
-      <input type="text" id="balance" name="balance" class="form-control" value = "<?php echo $balance;?>"/>
+      <input type="text" id="balance" name="balance" class="form-control" disabled="disabled" value = "<?php echo $balance;?>"/>
       
     </div>
   </div>
@@ -114,13 +126,8 @@ if (isset($_POST["okButton"])) {
   
    
 </body>
-<script type="text/javascript">$("#okButton").click(function(){$("input").prop("disabled",false);});</script>;
 <script type="text/javascript">
-// function text(x)
-// {
-//     var y=document.getElementById(x).value);
-//     document.getElementById("demo").innerHTML=y ;
-// }
-</script>
-
+  //在輸出的時候解除disabled輸入框不可變動功能
+  $("#okButton").click(function(){$("input").prop("disabled",false);});
+</script>;
 </html>	

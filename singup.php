@@ -13,22 +13,31 @@ if (isset($_POST["btnOK"]))//read 表單，去看$_POST裏頭有沒有一個較b
   
   if ($row!= "")//變數值不是空的時後
 	{
-    //echo "<script type='text/javascript'> alert('已經辦過帳號囉');location.href='login.php';</script>";
+    
+    echo "<script type='text/javascript'> alert('已經辦過帳號囉');location.href='login.php';</script>";
     
   }else{
-    $sql = "INSERT INTO `member`(`unumber`, `uPasswd`, `uName`) VALUES ('$sUserNumber','$sPasswd','$sUserName')";
+    //member insert into sql
+    $sql = "INSERT INTO `member`(`unumber`, `uPasswd`, `uName`,`total`) VALUES ('$sUserNumber','$sPasswd','$sUserName','1000')";
     require("database.php");//呼叫sql
     $result=mysqli_query($con, $sql) or die('MySQL query error');//把sql語法傳入
     
+    //get singup member uID
     $uID ="SELECT `uID`FROM `member` WHERE unumber ='$sUserNumber'";
     require("database.php");//呼叫sql
     $row=mysqli_fetch_assoc(mysqli_query($con, $uID));
-    $id =$row["uID"];
-    $acID= "INSERT INTO `account`(`uID`, `total`) VALUES ('$id','1000')";
+    $uid =$row["uID"];
+    
+
+    $nowdate = date('Y-m-d H:i:s',mktime (date(H)+8, date(i), date(s), date(m), date(d), date(Y)));
+    //account insert into 1000
+    $inuID= "INSERT INTO `details`(`uID`, `Date`, `type`, `money`, `balance`) VALUES ('$uid','$nowdate','income','1000','1000')";
     require("database.php");
-    mysqli_query($con, $acID);
+    mysqli_query($con, $inuID) or die('MySQL query error');
+
     session_start();
     $_SESSION["txtUserName"] = $sUserName;
+    $_SESSION["txtUserNumber"] = $sUserNumber;
     echo "<script type='text/javascript'> alert('註冊成功');location.href='index.php';</script>";
   }
     

@@ -17,14 +17,13 @@ if (isset($_POST["btnHome"]))//read 表單
 //將sql資料顯示在畫面上
 require("database.php"); 
 $sqlStatement ="
-select m.uID,m.unumber,m.uPasswd,m.uName,a.acID,a.total,d.Date,d.type,d.money,d.balance
-FROM member m,details d,account a
-where m.uID=a.uID
-AND a.acID=d.acID
-AND unumber = '$sUserNumber'"
-;
-$result=mysqli_query($con, $sqlStatement) or die('MySQL query error');//把sql語法傳入
-$row = mysqli_fetch_assoc($result);
+select d.uID,m.unumber,m.uPasswd,m.uName,m.total,d.Date,d.type,d.money,d.balance
+FROM member m,details d
+where m.uID=d.uID
+AND unumber = '$sUserNumber'
+order by  date DESC
+";
+$sqltotal =mysqli_fetch_assoc(mysqli_query($con, $sqlStatement));
 
 
 
@@ -60,28 +59,30 @@ $row = mysqli_fetch_assoc($result);
     <div class="form"> 
     <form class="member-form">
         <div class="container">
-        <h2 class="float-left"><?= $sUserName."會員專用"?>&nbsp;&nbsp;<font><?= "$"." ".$row["total"] ?></font> </h2>
+        <h2 class="float-left"><?= $sUserName."會員專用"?>&nbsp;&nbsp;<font><?= "$"." ".$sqltotal["total"] ?></font> </h2>
         <a href="index.php" class="btn btn-outline-info btn-md float-right">回首頁</a>
-        <a href="addtransaction.php" class="btn btn-outline-info btn-md float-right">新增一筆帳單</a>
+        <a href="income.php" class="btn btn-outline-info btn-md float-right">存款</a>
+        <a href="expense.php" class="btn btn-outline-info btn-md float-right">提款</a>
         
         <table class="table table-striped">
         <thead>
             <tr>
                 <th>日期</th>
-                <th>Reposit／Deposit</th>
+                <th>income／expense</th>
                 <th>money</th>
                 <th>blance</th>
             </tr>
         </thead>
         <tbody>
-            <!-- <?php //while ( $row = mysqli_fetch_assoc($result) ) { ?> -->
+        
+             <?php $result = mysqli_query($con, $sqlStatement); while ( $row = mysqli_fetch_assoc($result) ) { ?> 
             <tr>
                 <td><?= $row["Date"] ?></td>
                 <td><?= $row["type"] ?></td>
                 <td><?= $row["money"] ?></td>
                 <td><?= $row["balance"] ?></td>
             </tr>
-            <?php //} ?>
+            <?php } ?>
         </tbody>
         </table>
         </div>

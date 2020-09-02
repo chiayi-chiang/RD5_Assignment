@@ -1,13 +1,4 @@
 <?php 
-
-if (isset($_POST["btnHome"]))//read 表單
-{
-	header("Location: index.php");//go back to homepage
-	exit();
-}
-
-
-
 if (isset($_POST["btnOK"]))//read 表單，去看$_POST裏頭有沒有一個較btnOK的
 {
   //有

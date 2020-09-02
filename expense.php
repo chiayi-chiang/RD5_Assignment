@@ -1,9 +1,5 @@
 
 <?php
-
-
-
-
 session_start();
 $sUserNumber=$_SESSION["txtUserNumber"];//get now member's uuserNumber
 //echo $sUserNumber;
@@ -18,7 +14,10 @@ $sqltotal =mysqli_fetch_assoc(mysqli_query($con, $total));
 $Usertotal=$sqltotal["total"];//total
 $exmoney = $_POST["money"];//to import expense money
 //if member expense to overstep the limit，the expense upper bound equal total
-if($exmoney >= $Usertotal) { return $exmoney=$Usertotal; }
+if($exmoney >= $Usertotal) {
+  $_POST["money"]=$sqltotal["total"]; 
+  $exmoney = $_POST["money"];
+}
 $balance=$Usertotal-$exmoney;
 
 $id = $sqltotal["uID"];
@@ -118,7 +117,8 @@ if (isset($_POST["okButton"])) {
   </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button type="submit" name="okButton" id="okButton" class="btn btn-primary">Submit</button>
+      <button type="submit" name="okButton" id="okButton" class="btn btn-primary ">提款</button>
+      <a href="secret.php">回上頁</a>
     </div>
   </div>
 </form>

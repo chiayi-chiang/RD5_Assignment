@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost:8889
--- 產生時間： 2020 年 08 月 28 日 10:18
+-- 產生時間： 2020 年 09 月 02 日 02:34
 -- 伺服器版本： 5.7.26
 -- PHP 版本： 7.4.2
 
@@ -12,19 +12,10 @@ SET time_zone = "+00:00";
 
 --
 -- 資料庫： `bank`
---
+create database bank default character set utf8;
 
--- --------------------------------------------------------
-
+use bank;
 --
--- 資料表結構 `account`
---
-
-CREATE TABLE `account` (
-  `acID` int(11) UNSIGNED NOT NULL,
-  `uID` int(11) UNSIGNED NOT NULL,
-  `total` smallint(6) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -33,11 +24,11 @@ CREATE TABLE `account` (
 --
 
 CREATE TABLE `details` (
-  `acID` int(11) UNSIGNED NOT NULL,
-  `Date` timestamp NULL DEFAULT NULL,
-  `type` enum('R','E') NOT NULL DEFAULT 'R',
+  `uID` int(11) UNSIGNED NOT NULL,
+  `Date` datetime DEFAULT NULL,
+  `type` varchar(20) NOT NULL,
   `money` smallint(6) NOT NULL DEFAULT '0',
-  `total` smallint(6) NOT NULL DEFAULT '0'
+  `balance` smallint(6) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -50,7 +41,8 @@ CREATE TABLE `member` (
   `uID` int(11) UNSIGNED NOT NULL,
   `unumber` varchar(20) NOT NULL,
   `uPasswd` varchar(50) DEFAULT NULL,
-  `uName` varchar(20) NOT NULL DEFAULT ''
+  `uName` varchar(20) NOT NULL DEFAULT '',
+  `total` smallint(6) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -58,11 +50,10 @@ CREATE TABLE `member` (
 --
 
 --
--- 資料表索引 `account`
+-- 資料表索引 `details`
 --
-ALTER TABLE `account`
-  ADD PRIMARY KEY (`acID`),
-  ADD KEY `fk_member_account` (`uID`);
+ALTER TABLE `details`
+  ADD KEY `fk_member_details` (`uID`);
 
 --
 -- 資料表索引 `member`
@@ -75,23 +66,17 @@ ALTER TABLE `member`
 --
 
 --
--- 使用資料表自動遞增(AUTO_INCREMENT) `account`
---
-ALTER TABLE `account`
-  MODIFY `acID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- 使用資料表自動遞增(AUTO_INCREMENT) `member`
 --
 ALTER TABLE `member`
-  MODIFY `uID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `uID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- 已傾印資料表的限制式
 --
 
 --
--- 資料表的限制式 `account`
+-- 資料表的限制式 `details`
 --
-ALTER TABLE `account`
-  ADD CONSTRAINT `fk_member_account` FOREIGN KEY (`uID`) REFERENCES `member` (`uID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `details`
+  ADD CONSTRAINT `fk_member_details` FOREIGN KEY (`uID`) REFERENCES `member` (`uID`) ON DELETE CASCADE ON UPDATE CASCADE;

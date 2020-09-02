@@ -59,7 +59,9 @@ $sqltotal =mysqli_fetch_assoc(mysqli_query($con, $sqlStatement));
     <div class="form"> 
     <form class="member-form">
         <div class="container">
-        <h2 class="float-left"><?= $sUserName."會員專用"?>&nbsp;&nbsp;<font><?= "$"." ".$sqltotal["total"] ?></font> </h2>
+        <h2 class="float-left"><?= $sUserName."會員專用"?>
+        <div id="listBtn" onclick="listBtn()">******</div>
+        <div id="textlistn" style="display:none;"></div></h2>
         <a href="index.php" class="btn btn-outline-info btn-md float-right">回首頁</a>
         <a href="income.php" class="btn btn-outline-info btn-md float-right">存款</a>
         <a href="expense.php" class="btn btn-outline-info btn-md float-right">提款</a>
@@ -90,4 +92,17 @@ $sqltotal =mysqli_fetch_assoc(mysqli_query($con, $sqlStatement));
     </div>
   </div> 
 </body>
+<script>
+function listBtn() {
+    var listBtn = document.getElementById('listBtn');
+    var textlistn = document.getElementById('textlistn');
+    if (textlistn.style.display === 'none') {//當物件被點擊時 判斷 id為textlistn的style.display是否為'none'
+        textlistn.style.display = 'block';//是的話就把style.display變成'block'
+        listBtn.innerText = "<?="$"." ".$sqltotal["total"]?> ";//顯示total
+    } else {
+        textlistn.style.display = 'none';//否的話就變成'none'
+        listBtn.innerText = "******";//none時呈現*******
+    }
+}
+</script>
 </html>

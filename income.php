@@ -1,9 +1,5 @@
 
 <?php
-
-
-
-
 session_start();
 $sUserNumber=$_SESSION["txtUserNumber"];//get now member's uuserNumber
 //echo $sUserNumber;
@@ -16,10 +12,13 @@ require("database.php");
 $sqltotal =mysqli_fetch_assoc(mysqli_query($con, $total));
 //var_dump($sqltotal);
 $Usertotal=$sqltotal["total"];//total
-$exmoney = $_POST["money"];//to import expense money
-//if member expense to overstep the limit，the expense upper bound equal total
-if($exmoney >= $Usertotal) { return $exmoney=$Usertotal; }
-$balance=$Usertotal-$exmoney;
+$inmoney = $_POST["money"];//to import expense money
+//if member income to overstep the limit，the income upper bound equal 10000
+if($inmoney >= 10000) {
+  $_POST["money"]=10000; 
+  $exmoney = $_POST["money"];
+}
+$balance=$Usertotal+$inmoney;
 
 $id = $sqltotal["uID"];
 
@@ -83,7 +82,7 @@ if (isset($_POST["okButton"])) {
 
 <body>
 <div class="form"> 
-<form method="post" action="expense.php">
+<form method="post" action="income.php">
   <div class="form-group row">
     <label for="nowdate" class="col-4 col-form-label">date:</label> 
     <div class="col-8">
@@ -93,7 +92,7 @@ if (isset($_POST["okButton"])) {
   <div class="form-group row">
   <label for="nowdate" class="col-4 col-form-label">type:</label> 
     <div class="col-8">
-        <input  type="text" id="typeId" name="typeId"  class="form-control" disabled="disabled" value="expense"> 
+        <input  type="text" id="typeId" name="typeId"  class="form-control" disabled="disabled" value="income"> 
     </div>
   </div> 
   <div class="form-group row">
@@ -118,7 +117,8 @@ if (isset($_POST["okButton"])) {
   </div>
   <div class="form-group row">
     <div class="offset-4 col-8">
-      <button type="submit" name="okButton" id="okButton" class="btn btn-primary">Submit</button>
+      <button type="submit" name="okButton" id="okButton" class="btn btn-primary">存款</button>
+      <a href="secret.php">回上頁</a>
     </div>
   </div>
 </form>

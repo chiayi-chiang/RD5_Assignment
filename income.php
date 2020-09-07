@@ -1,5 +1,6 @@
 
 <?php
+
 session_start();
 $sUserNumber=$_SESSION["txtUserNumber"];//get now member's uuserNumber
 //echo $sUserNumber;
@@ -72,7 +73,7 @@ if (isset($_POST["okButton"])) {
         z-index: 1;
         background: #FFFFFF;
         max-width: 1000px;
-        margin: 0 auto 100px;
+        margin: 100px auto ;
         padding: 45px;
         text-align: center;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);

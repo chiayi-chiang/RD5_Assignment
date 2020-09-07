@@ -1,5 +1,6 @@
 
 <?php
+//echo $_POST["money"];
 session_start();
 $sUserNumber=$_SESSION["txtUserNumber"];//get now member's uuserNumber
 //echo $sUserNumber;
@@ -72,7 +73,7 @@ if (isset($_POST["okButton"])) {
         z-index: 1;
         background: #FFFFFF;
         max-width: 1000px;
-        margin: 0 auto 100px;
+        margin: 100px auto ;
         padding: 45px;
         text-align: center;
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -81,48 +82,48 @@ if (isset($_POST["okButton"])) {
 </head>
 
 <body>
-<div class="form"> 
-<form method="post" action="expense.php">
-  <div class="form-group row">
-    <label for="nowdate" class="col-4 col-form-label">date:</label> 
-    <div class="col-8">
-        <input type="text" id="nowdate" name="nowdate" class="form-control" disabled="disabled" value = "<?php echo date('Y-m-d H:i:s',mktime (date(H)+8, date(i), date(s), date(m), date(d), date(Y)))?>"/>       
-    </div>
-  </div>
-  <div class="form-group row">
-  <label for="nowdate" class="col-4 col-form-label">type:</label> 
-    <div class="col-8">
-        <input  type="text" id="typeId" name="typeId"  class="form-control" disabled="disabled" value="expense"> 
-    </div>
-  </div> 
-  <div class="form-group row">
-    <label for="money" class="col-4 col-form-label">金額:</label> 
-    <div class="col-8">
-        <div class = "demo">
-            <input id="money" name="money" type="text" class="form-control"
-             autofocus 
-             onchange="this.form.submit()" value ="<?=(isset($_POST['money']))?$_POST['money']:""?>">
-             <!--autofocus->鎖定輸入框，
-             onchange="this.form.submit()"->監視輸入框資料是否有變更，亦有變更立即送出所有表單
-             如果$_POST['money']有值，則顯示，沒有則空-->
+  <div class="form"> 
+    <form method="post" action="expense.php">
+      <div class="form-group row">
+        <label for="nowdate" class="col-4 col-form-label">date:</label> 
+        <div class="col-8">
+            <input type="text" id="nowdate" name="nowdate" class="form-control" disabled="disabled" value = "<?php echo date('Y-m-d H:i:s',mktime (date(H)+8, date(i), date(s), date(m), date(d), date(Y)))?>"/>       
         </div>
-    </div>
+      </div>
+      <div class="form-group row">
+      <label for="nowdate" class="col-4 col-form-label">type:</label> 
+        <div class="col-8">
+            <input  type="text" id="typeId" name="typeId"  class="form-control" disabled="disabled" value="expense"> 
+        </div>
+      </div> 
+      <div class="form-group row">
+        <label for="money" class="col-4 col-form-label">金額:</label> 
+        <div class="col-8">
+            <div class = "demo">
+                <input id="money" name="money" type="text" class="form-control"
+                autofocus 
+                onchange="this.form.submit()" value ="<?=(isset($_POST['money']))?$_POST['money']:""?>">
+                <!--autofocus->鎖定輸入框，
+                onchange="this.form.submit()"->監視輸入框資料是否有變更，亦有變更立即送出所有表單
+                如果$_POST['money']有值，則顯示，沒有則空-->
+            </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="balance" class="col-4 col-form-label">餘額:</label> 
+        <div class="col-8">
+          <input type="text" id="balance" name="balance" class="form-control" disabled="disabled" value = "<?php echo $balance;?>"/>
+          
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="offset-4 col-8">
+          <button type="submit" name="okButton" id="okButton" class="btn btn-primary ">提款</button>
+          <a href="secret.php">回上頁</a>
+        </div>
+      </div>
+    </form>
   </div>
-  <div class="form-group row">
-    <label for="balance" class="col-4 col-form-label">餘額:</label> 
-    <div class="col-8">
-      <input type="text" id="balance" name="balance" class="form-control" disabled="disabled" value = "<?php echo $balance;?>"/>
-      
-    </div>
-  </div>
-  <div class="form-group row">
-    <div class="offset-4 col-8">
-      <button type="submit" name="okButton" id="okButton" class="btn btn-primary ">提款</button>
-      <a href="secret.php">回上頁</a>
-    </div>
-  </div>
-</form>
-</div>
   
    
 </body>
